@@ -28,10 +28,10 @@
 
 4. 在该项目的classpath下新建config.properties
 
-5. 在该配置文件中写下即将被扫描的包，如a.b.c
+5. 在该配置文件中写下即将被扫描的包，如a.b.c、e.f.g (可以扫描多个包，使用英文逗号隔开，无空格)
 
 ```
-package=a.b.c
+package=a.b.c,e.f.g
 ```
 
 #### 开始做题
