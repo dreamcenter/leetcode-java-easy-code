@@ -3,7 +3,9 @@ package top.dreamcenter.easycode.core;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 
@@ -22,7 +24,15 @@ import top.dreamcenter.easycode.inte.NB;
  */
 
 public class Test {
-	private static final String PACKAGE;
+	/**
+	 * 2022.11.07 remove "final"
+	 */
+	private static String PACKAGE;
+	
+	/**
+	 * 2022.11.07 enhanced
+	 */
+	private static final List<String> packages = new LinkedList<>();
 	
 	static {
 		Properties properties = new Properties();
@@ -34,6 +44,15 @@ public class Test {
 			}
 			properties.load(inputStream);
 			pk_name = properties.getProperty("package");
+			
+			/**
+			 * 2022.11.07 enhanced
+			 */
+			String[] res = pk_name.split(",");
+			for (String str : res) {
+				packages.add(str);
+			}
+			
 		} catch (IOException e) {
 			System.err.println("[dai]\t加载config.properties时出现错误！" + e.getMessage());
 		} catch (Exception e) {
@@ -47,7 +66,24 @@ public class Test {
 		if (PACKAGE!=null) {
 			System.out.println("START");
 			System.out.println("********************");
-			reflectClasses(getClassList());
+			
+//			reflectClasses(getClassList());
+			
+			/**
+			 * 2022.11.07 enhanced
+			 */
+			
+			String url = Test.class.getClassLoader().getResource("").getPath();
+			for (String pkgName : packages) {
+				File f = new File(url + pkgName.replace(".", "/"));
+				if (f.exists()) {
+					PACKAGE = pkgName;
+					reflectClasses(getClassList());
+				} else {
+					System.err.println("\n" + pkgName + " NOT EXIST!\n");
+				}
+			}
+			
 			System.out.println("********************");
 			System.out.println("END");
 		} else {

@@ -1,10 +1,13 @@
-package top.dreamcenter.easycode.test;
+package top.dreamcenter.test;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import top.dreamcenter.easycode.anno.TMD;
 import top.dreamcenter.easycode.inte.NB;
+import top.dreamcenter.easycode.util.ListNode;
+import top.dreamcenter.easycode.util.ListNodeHelper;
+import top.dreamcenter.easycode.util.PrintHelper;
 
 
 @TMD(true)
@@ -28,9 +31,11 @@ public class Solution0001 implements NB{
 	@Override
 	public void runNB() {
 		int[] res = twoSum(new int[] {3,3}, 6);
-		for (int i = 0; i < res.length; i++) {
-			System.out.println(res[i]);
-		}
+		PrintHelper.out.println(res);
+		
+		ListNode ln = ListNodeHelper.toListNode(res, false);
+		PrintHelper.out.println(ln);
+		
 	}
 	
 }
